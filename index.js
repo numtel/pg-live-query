@@ -128,8 +128,8 @@ LivePg.prototype._initListener = function() {
                 && payload.table in queryBuffer.triggers
                 && (payload.op === 'UPDATE'
                   // Rows changed in an UPDATE operation must check old and new
-                  ? queryBuffer.triggers[payload.table](payload.new_data[0], 'UPDATE1')
-                    || queryBuffer.triggers[payload.table](payload.old_data[0], 'UPDATE2')
+                  ? queryBuffer.triggers[payload.table](payload.new_data[0], 'UPDATE')
+                    || queryBuffer.triggers[payload.table](payload.old_data[0], 'UPDATE_OLD')
                   // Rows changed in INSERT/DELETE operations only check once
                   : queryBuffer.triggers[payload.table](payload.data[0], payload.op)))
               || (queryBuffer.triggers
