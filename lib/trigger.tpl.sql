@@ -4,6 +4,9 @@
  * funName: name of function to create/replace
  * channel: NOTIFY channel on which to broadcast changes
  */
+
+BEGIN; -- start of transaction
+SELECT pg_advisory_xact_lock(510127006994284723);  -- random 64-bit signed ('bigint') lock number
 CREATE OR REPLACE FUNCTION "$$funName$$"() RETURNS trigger AS $$
   DECLARE
     row_data   RECORD;
@@ -48,3 +51,4 @@ CREATE OR REPLACE FUNCTION "$$funName$$"() RETURNS trigger AS $$
     RETURN NULL;
   END;
 $$ LANGUAGE plpgsql;
+COMMIT; -- end of transaction
